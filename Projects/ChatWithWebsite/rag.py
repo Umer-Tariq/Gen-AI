@@ -66,11 +66,12 @@ def get_answer(url, question):
         # Step 3: Create vector store with unique persistent directory
         vectorstore = FAISS.from_documents(
             documents=splits,
-            embedding=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+            embedding=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2"),
+            # persist_directory=persist_dir
         )
 
         # Persist the database
-        vectorstore.persist()
+        # vectorstore.persist()
 
         # Create retriever
         retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
