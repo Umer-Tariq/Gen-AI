@@ -4,7 +4,7 @@ import shutil
 import uuid
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_mistralai import ChatMistralAI
 from langchain.prompts import ChatPromptTemplate
 from operator import itemgetter
@@ -64,7 +64,7 @@ def get_answer(url, question):
         splits = text_splitter.split_documents(docs)
 
         # Step 3: Create vector store with unique persistent directory
-        vectorstore = Chroma.from_documents(
+        vectorstore = FAISS.from_documents(
             documents=splits,
             embedding=HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2"),
             persist_directory=persist_dir
