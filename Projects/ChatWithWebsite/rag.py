@@ -77,7 +77,8 @@ def get_answer(url, question):
         retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
         # Step 4: Set up the LLM and prompt template
-        llm = ChatMistralAI()
+        mistral_api_key = st.secrets["mistral_api_key"]
+        llm = ChatMistralAI(api_key=mistral_api_key)
         rag_prompt_template = """
         You are an assistant that is helping a user interact with content from a specific website. The content of the website has been extracted and is provided below.
 
@@ -117,7 +118,7 @@ def main():
     st.write("Enter a URL and ask a question based on the content of that website!")
 
     # Ensure base directory exists
-    os.makedirs("./chroma_db", exist_ok=True)
+    os.makedirs("./faiss_db", exist_ok=True)
 
     # Input fields for the URL and Question
     url = st.text_input("Enter URL of the Website:")
